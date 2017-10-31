@@ -43,6 +43,7 @@
     <Compile Include="Model\ContatoModel.cs" />
     <Compile Include="Model\Repository\ContatoModelRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\Commands\ContactPutThumbCommand.cs" />
     <Compile Include="ViewModel\Commands\CallCommand.cs" />
     <Compile Include="ViewModel\ContatoViewModel.cs" />
     <Compile Include="View\Contato\MainPage.xaml.cs">

@@ -1,11 +1,12 @@
-﻿using System;
-
+﻿
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
-using Android.Runtime;
-using Android.Views;
-using Android.Widget;
 using Android.OS;
+using System;
+using Xamarin.Forms;
+using Xamarin.Media;
+using XF.Contato.API;
 
 namespace XF.Contato.Droid
 {
@@ -21,6 +22,15 @@ namespace XF.Contato.Droid
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
             LoadApplication(new App());
+        }
+
+        protected override async void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            if (resultCode != Result.Canceled)
+            {
+                var media = await data.GetMediaFileExtraAsync(Forms.Context);
+                MessagingCenter.Send(DependencyService.Get<IContato>(), "thumb", media.Path);
+            }
         }
     }
 }

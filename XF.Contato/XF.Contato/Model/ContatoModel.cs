@@ -8,6 +8,11 @@
         #region Properties
 
         /// <summary>
+        /// Gets or sets the id.
+        /// </summary>
+        public string Id { get; set; }
+
+        /// <summary>
         /// Gets or ests the Nome
         /// </summary>
         public string Nome { get; set; }

@@ -16,6 +16,18 @@
         /// <returns>A list of contatos.</returns>
         IEnumerable<ContatoModel> GetContatos();
 
+        /// <summary>
+        /// Sets the photo thumbnail for the contact.
+        /// </summary>
+        /// <param name="contato">The contato to call.</param>
+        /// <param name="fileName">The file for the picture.</param>
+        void PutPhoto(ContatoModel contato);
+
+        /// <summary>
+        /// Gets the photo thumbnail for the contact.
+        /// </summary>
+        void GetPhoto();
+
         #endregion
     }
 }

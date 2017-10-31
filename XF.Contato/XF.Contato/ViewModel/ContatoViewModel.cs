@@ -47,6 +47,11 @@
         /// Gets the call command.
         /// </summary>
         public CallCommand CallCommand { get; }
+        
+        /// <summary>
+        /// Gets the contact command.
+        /// </summary>
+        public ContactPutThumbCommand ContactPutThumbCommand { get; }
 
         #endregion
 
@@ -60,6 +65,7 @@
             Contatos = new ObservableCollection<ContatoModel>(ContatoModelRepository.GetContatos());
 
             CallCommand = new CallCommand(this);
+            ContactPutThumbCommand = new ContactPutThumbCommand(this);
         }
 
         #endregion
@@ -73,6 +79,24 @@
         public void Call(ContatoModel contato)
         {
             DependencyService.Get<ICall>().Call(contato);
+        }
+
+        /// <summary>
+        /// Initializes the call to the contato.
+        /// </summary>
+        public void GetPhoto()
+        {
+            DependencyService.Get<IContato>().GetPhoto();
+        }
+
+        /// <summary>
+        /// Initializes the call to the contato.
+        /// </summary>
+        /// <param name="contato">The contato to call.</param>
+        public void PutPhoto(ContatoModel contato)
+        {
+            DependencyService.Get<IContato>().PutPhoto(contato);
+            DependencyService.Get<IContato>().GetPhoto();
         }
 
         /// <summary>
