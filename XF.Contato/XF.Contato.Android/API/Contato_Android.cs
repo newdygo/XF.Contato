@@ -36,17 +36,15 @@ namespace XF.Contato.Droid
                     {
                         if (t.Result)
                         {
-                            foreach (Contact contact in book.OrderBy(c => c.DisplayName))
+                            foreach (Contact contact in book)
                             {
                                 list.Add(new ContatoModel() { Nome = contact.DisplayName, Numero = contact.Phones.FirstOrDefault()?.Number });
                             }
                         }
                     }
 
-                }, TaskScheduler.FromCurrentSynchronizationContext()).Wait();
-
-                list.Add(new ContatoModel() { Nome = "Diego", Numero = "9999" });
-
+                }).Wait();
+                
                 return list;
             }
             catch (System.Exception ex)
