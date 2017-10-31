@@ -1,19 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿
 using Xamarin.Forms;
+using XF.Contato.View.Contato;
+using XF.Contato.ViewModel;
 
 namespace XF.Contato
 {
     public partial class App : Application
     {
+        public static ContatoViewModel ContatoVM { get; set; }
+
         public App()
         {
             InitializeComponent();
+            InitializeApplication();
 
-            MainPage = new XF.Contato.MainPage();
+            MainPage = new NavigationPage(new MainPage() { BindingContext = App.ContatoVM });
+        }
+
+        private void InitializeApplication()
+        {
+            if (ContatoVM == null)
+                ContatoVM = new ContatoViewModel();
         }
 
         protected override void OnStart()
