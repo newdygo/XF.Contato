@@ -24,27 +24,36 @@ namespace XF.Contato.Droid
         /// <returns>A list of contatos</returns>
         public IEnumerable<ContatoModel> GetContatos()
         {
-            var list = new List<ContatoModel>();
-            var book = new AddressBook(Forms.Context);
+            try
+            {
+                var list = new List<ContatoModel>();
+                var book = new AddressBook(Forms.Context);
 
-            book.RequestPermission().ContinueWith(t => {
-
-                if (!t.IsFaulted)
+                book.RequestPermission().ContinueWith(t =>
                 {
-                    if (t.Result)
+
+                    if (!t.IsFaulted)
                     {
-                        foreach (Contact contact in book.OrderBy(c => c.DisplayName))
+                        if (t.Result)
                         {
-                            list.Add(new ContatoModel() { Nome = contact.DisplayName, Numero = contact.Phones.FirstOrDefault()?.Number });
+                            foreach (Contact contact in book.OrderBy(c => c.DisplayName))
+                            {
+                                list.Add(new ContatoModel() { Nome = contact.DisplayName, Numero = contact.Phones.FirstOrDefault()?.Number });
+                            }
                         }
                     }
-                }
-                
-            }, TaskScheduler.FromCurrentSynchronizationContext()).Wait();
-            
-            list.Add(new ContatoModel() { Nome = "Diego", Numero = "9999" });
 
-            return list;
+                }, TaskScheduler.FromCurrentSynchronizationContext()).Wait();
+
+                list.Add(new ContatoModel() { Nome = "Diego", Numero = "9999" });
+
+                return list;
+            }
+            catch (System.Exception ex)
+            {
+
+                throw ex;
+            }
         }
 
         #endregion

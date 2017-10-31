@@ -6,6 +6,7 @@
     using Xamarin.Forms;
     using XF.Contato.API;
     using XF.Contato.Model;
+    using XF.Contato.Model.Repository;
     using XF.Contato.ViewModel.Commands;
 
     /// <summary>
