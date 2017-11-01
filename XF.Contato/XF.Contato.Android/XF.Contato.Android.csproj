@@ -120,6 +120,7 @@
   <ItemGroup>
     <Compile Include="API\Call_Android.cs" />
     <Compile Include="API\Contato_Android.cs" />
+    <Compile Include="Common\Extension\ImageExtension.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

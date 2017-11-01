@@ -1,4 +1,6 @@
-﻿namespace XF.Contato.Model
+﻿using Xamarin.Forms;
+
+namespace XF.Contato.Model
 {
     /// <summary>
     /// Defines the contato model.
@@ -21,6 +23,11 @@
         /// Gets or sets the Numero
         /// </summary>
         public string Numero { get; set; }
+
+        /// <summary>
+        /// Gets or sets the thumbnail.
+        /// </summary>
+        public ImageSource Thumbnail { get; set; }
 
         #endregion
     }

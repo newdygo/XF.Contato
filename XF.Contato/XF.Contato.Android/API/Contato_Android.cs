@@ -5,11 +5,17 @@ using XF.Contato.Droid;
 namespace XF.Contato.Droid
 {
     using Android.App;
+    using Android.Content;
+    using Android.Graphics;
+    using Android.Provider;
+    using System;
     using System.Collections.Generic;
+    using System.IO;
     using System.Linq;
     using Xamarin.Contacts;
     using Xamarin.Media;
     using XF.Contato.API;
+    using XF.Contato.Droid.Common.Extension;
     using XF.Contato.Model;
 
     /// <summary>
@@ -76,7 +82,13 @@ namespace XF.Contato.Droid
             {
                 return Contacts.Select((contact, b) =>
                 {
-                    return new ContatoModel() { Id = contact.Id, Nome = contact.DisplayName, Numero = contact.Phones.FirstOrDefault()?.Number };
+                    return new ContatoModel()
+                    {
+                        Id = contact.Id,
+                        Nome = contact.DisplayName,
+                        Numero = contact.Phones.FirstOrDefault()?.Number,
+                        Thumbnail = contact.GetThumbnail().ToImageSource()
+                    };
                 });
             }
             catch (System.Exception ex)
@@ -94,13 +106,18 @@ namespace XF.Contato.Droid
         {
             MessagingCenter.Subscribe<IContato, string>(this, "thumb", (cont, fileName) =>
             {
-                _Contacts?.Where(x => x.Id == contato.Id)?.FirstOrDefault()?.SaveThumbnailAsync(fileName).ContinueWith(x =>
+                try
+                {                                        
+                    var stream = new MemoryStream();
+
+                    _Contacts?.Where(x => x.Id == contato.Id).FirstOrDefault().GetThumbnail().Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
+                   
+                    //contato.Thumbnail = ImageSource.FromStream(() => stream);
+                }
+                catch (System.Exception ex)
                 {
-                    if (!x.IsFaulted)
-                    {
-                        var ff = x.Result;
-                    }
-                });
+                    throw ex;
+                }
             });
         }
 
