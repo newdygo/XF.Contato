@@ -3,7 +3,6 @@ using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
-using System;
 using Xamarin.Forms;
 using Xamarin.Media;
 using XF.Contato.API;
@@ -20,7 +19,7 @@ namespace XF.Contato.Droid
 
             base.OnCreate(bundle);
 
-            global::Xamarin.Forms.Forms.Init(this, bundle);
+            Forms.Init(this, bundle);
             LoadApplication(new App());
         }
 
@@ -28,8 +27,7 @@ namespace XF.Contato.Droid
         {
             if (resultCode != Result.Canceled)
             {
-                var media = await data.GetMediaFileExtraAsync(Forms.Context);
-                MessagingCenter.Send(DependencyService.Get<IContato>(), "thumb", media.Path);
+                MessagingCenter.Send(DependencyService.Get<IContato>(), "thumb", (await data.GetMediaFileExtraAsync(Forms.Context)).Path);
             }
         }
     }

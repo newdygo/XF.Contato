@@ -78,23 +78,16 @@ namespace XF.Contato.Droid
         /// <returns>A list of contatos</returns>
         public IEnumerable<ContatoModel> GetContatos()
         {
-            try
+            return Contacts.Select((contact, b) =>
             {
-                return Contacts.Select((contact, b) =>
+                return new ContatoModel()
                 {
-                    return new ContatoModel()
-                    {
-                        Id = contact.Id,
-                        Nome = contact.DisplayName,
-                        Numero = contact.Phones.FirstOrDefault()?.Number,
-                        Thumbnail = contact.GetThumbnail().ToImageSource()
-                    };
-                });
-            }
-            catch (System.Exception ex)
-            {
-                throw ex;
-            }
+                    Id = contact.Id,
+                    Nome = contact.DisplayName,
+                    Numero = contact.Phones.FirstOrDefault()?.Number,
+                    Thumbnail = contact.GetThumbnail().ToImageSource()
+                };
+            });
         }
 
         /// <summary>
@@ -107,12 +100,8 @@ namespace XF.Contato.Droid
             MessagingCenter.Subscribe<IContato, string>(this, "thumb", (cont, fileName) =>
             {
                 try
-                {                                        
-                    var stream = new MemoryStream();
-
-                    _Contacts?.Where(x => x.Id == contato.Id).FirstOrDefault().GetThumbnail().Compress(Bitmap.CompressFormat.Jpeg, 100, stream);
-                   
-                    //contato.Thumbnail = ImageSource.FromStream(() => stream);
+                {
+                    contato.Thumbnail = ImageSource.FromFile(fileName);
                 }
                 catch (System.Exception ex)
                 {

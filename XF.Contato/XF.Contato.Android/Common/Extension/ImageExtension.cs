@@ -19,21 +19,13 @@
         /// <returns>A ImageSource.</returns>
         public static ImageSource ToImageSource(this Bitmap image)
         {
-            //return ImageSource.FromFile(@"C:/Temp/diego_perfil.png");
-            //return ImageSource.FromUri(new Uri("https://xamarin.com/content/images/pages/forms/example-app.png"));
-
-            //return new Image() { Source = ImageSource.FromFile(@"C:\Temp\diego_perfil.jpg") };
-
-            //if (image == null)
-            //    return ImageSource.FromUri(new Uri("https://xamarin.com/content/images/pages/forms/example-app.png"));
-
-            var stream = new MemoryStream();
+            var imgFile = new byte[image.Width * image.Height * 4];
+            var stream = new MemoryStream(imgFile);
 
             image.Compress(Bitmap.CompressFormat.Png, 100, stream);
+            stream.Flush();
 
-            var ff = stream.Length;
-
-            return ImageSource.FromStream(() => stream);
+            return ImageSource.FromStream(() => new MemoryStream(imgFile));
         }
 
         #endregion
